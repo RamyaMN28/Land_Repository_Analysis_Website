@@ -1,0 +1,38 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+    Home | JMR
+{% endblock title %}
+
+
+
+{% block content %}
+<section class="bg-light py-4 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">{{ property_name }} Plots</h4>
+                <hr style="border-color:#b8bfc2;">
+                {% include 'shop/inc/message.html' %}
+            </div>
+            {% for item in properties %}
+            <div class="col-md-4 col-lg-3">
+                <div class ="card my-3">
+                    <img src="{{item.image.url}}" class="card-image-top" alt="image">
+                    <a href="{% url 'plot_details' property_name item.name  %}">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{item.name}}</h5>
+                        <p class="card-text">
+                            <span class="float-start "><s>Rs.{{ item.original_price |  stringformat:'d'}}</s></span>
+                            <span class="float-end "><s>Rs.{{ item.selling_price |  stringformat:'d'}}</s></span>
+                        </p>
+                    </div>
+                    </a>
+                </div> 
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}

@@ -1,0 +1,92 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+    Home | JMR
+{% endblock title %}
+
+
+
+{% block content %}
+<section class="bg-light py-4 my-5" style="min-height:600px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">{{properties}}</h4>
+                <hr style="border-color:#b8bfc2;">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="{% url 'home' %}"> Home </a></li>
+                      <li class="breadcrumb-item"><a href="{% url 'PlotTypeViews' properties.name %}"> PropertyType </a></li>
+                      <li class="breadcrumb-item active" aria-current="page">{{properties}}</li>
+                    </ol>
+                  </nav>
+                  {% include 'shop/inc/message.html' %}
+            </div>
+            <div class="col-4 my-3 pic-box">
+            {% if properties.trending %}
+                <div class="hot">DEAL</div>
+            {% endif %}
+                <img src="{{properties.image.url}}" class="card-image-top" alt="{{properties}}">
+            </div>            
+            <div class="col-8 my-3">
+                <h5 class="text-success">{{properties}}</h5>
+                <p>{{properties.seller}}</p>
+                <p>{{properties.description}}</p>
+                <h6 class="my-2 text-danger">Current Price : Rs.<s>{{properties.original_price}}</s></h6>
+                <h5 class="my-2 text-primary">Offer Price : Rs.{{properties.selling_price}}</h5>
+                <div class="my-3">
+                   {% if properties.Quantity > 0 %}
+                   <input type="hidden" value="{{properties.id}}" id="pid">
+                   
+                   <p>
+                    <div class="input-group" style="width:150px">
+                        <button class="input-group-text bh-success text-light" id="btnMinus" ><i class="fa fa-upload"></i></button>
+                        <input type="text" name="qty" id="txtQty" value="1" class="form-control text-center" disabled>
+                        <button class="input-group-text bg-success text-light" id="btnPlus"><i class="fa fa-download"></i></button>
+                </div>
+                   </p>
+                   <button class="btn btn-primary" id="btnCart"><i class="fa fa-cart"></i > Add To Cart </button>
+                   {% else %}
+                   <button class="btn btn-secondary"><i class="fa fa-ban"></i> Sold Out </button>
+                   {% endif %}
+                   <button class="btn btn-danger"><i class="fa fa-heart"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        const btnPlus = document.getElementById("btnPlus");
+        const btnMinus = document.getElementById("btnMinus");
+        const pid = document.getElementById("pid");
+        const btnCart = document.getElementById("btnCart");
+
+
+    
+        btnCart.addEventListener("click", function () {
+            let postObj = {
+
+                'pid': pid.value
+                
+            };
+            console.log(postObj);
+            fetch("/addtocart",{
+                method:'POST',
+                credentials:'same-origin',
+                headers:{
+                    'Accept':'application/json',
+                    'X-Requested-With':'XMLHttpRequest',
+                    'X-CSRFToken':'{{ csrf_token }}',
+                },
+                body:JSON.stringify(postObj)
+            }).then(response=>{
+                return response.json();
+            });
+            
+        });
+    });
+
+</script>
+    
+
+{% endblock content %}
