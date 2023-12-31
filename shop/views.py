@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 import json
 # Create your views here.
+#i edited this file
 def home(request):
     properties = Property.objects.filter(trending=1)
     return render(request,"shop/index.html",{"properties":properties})
