@@ -179,7 +179,6 @@ class Property(models.Model):
     status=models.BooleanField(default=False,help_text="0-show,1-hidden")
     image=models.ImageField(upload_to=getFileName,null=False,blank=True)
     trending=models.BooleanField(default=False,help_text="0-show,1-hidden")
-    
     def __str__(self):
         var=self.address +" "+ self.town
         return var
@@ -219,8 +218,8 @@ class Employee(models.Model):
     phone_number = models.CharField(max_length=100,null=False, blank=False)
 
     def __str__(self):
-   # Name= self.first_name + " " + self.last_name
-      return self.email_id
+      Name= self.first_name + " " + self.last_name
+      return Name
 
 class RoleType(models.Model):
     description = models.CharField(max_length=100, null=False, blank=False)
@@ -294,8 +293,17 @@ class Contract(models.Model):
       return self.signed_date
 
 class Cart(models.Model):
-    user_id=models.ForeignKey(Client,on_delete=models.CASCADE)
-    property_id=models.ForeignKey(Property,on_delete=models.CASCADE)
-    property_qty=models.IntegerField(null=False,blank=False)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    property=models.ForeignKey(Property,on_delete=models.CASCADE)
+    property_qty=models.IntegerField(default= 1,null=False,blank=False)
     created_at=models.DateTimeField(auto_now_add=True)
 
+
+class Favourite(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    property=models.ForeignKey(Property,on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+#@property
+#def get_discount(self):
+#   discount=self.property.original_price -self.property.selling_price
+#  return discount

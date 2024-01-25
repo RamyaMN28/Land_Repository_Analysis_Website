@@ -1,0 +1,72 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+    Registration | JMR
+{% endblock title %}
+{% block content %}
+   <section class="bg-light py-4 my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mb-3">Cart Items</h4>
+                    <hr style="border-color: #b8bfc2;">
+                   
+                </div>
+
+               
+                <table class="">
+                    <tr>
+                        <th>Image</th>
+                        <th>seller</th>
+                        <th>Property Name</th>
+                        <th>Property size</th>
+                        <th>Original Price</th>
+                        <th>Selling Price</th>
+                        
+                        <th>Remove</th>
+                    </tr>
+                    {% for item in cart %}
+                    <tr>
+                        <td><img src="{{item.property.image.url}}" height="75px" alt="{{item.property.name}}"></td>
+                        <td>{{item.property.seller}}</td>
+                        <td>{{item.property.name}}</td>
+                        <td>{{item.property.property_size | stringformat:'d'}}</td>
+                        <td>{{item.property.original_price | stringformat:'d'}}</td>
+                        <td>{{item.property.selling_price | stringformat:'d'}}</td>
+                        <td><a href="{% url 'remove_cart' item.id %}" onclick="return confirm('Are you sure you want to remove?')" class = "btn btn-danger btn-sm"><i class="fa fa-trash"></i>Remove</a></td>
+
+                    </tr>
+                   
+               
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                   
+                    
+                    <td colspan="2" ><b>Total Amount : </b></td>
+                    <td id="net"></td>
+               </tr>
+            </table>
+            </div>
+        </div>
+    </section>
+    <script>
+    
+       document.addEventListener("DOMContentLoaded", function () {
+            // Calculate and display total amount
+            calculateTotalAmount();
+        });
+        function calculateTotalAmount() {
+            // Get all selling prices
+            var sellingPrices = document.querySelectorAll('td:nth-child(6)');
+            // Calculate total amount
+            var totalAmount = 0;
+            sellingPrices.forEach(function (sellingPrice) {
+            totalAmount += parseFloat(sellingPrice.textContent.replace(',', '')); // Assuming the prices may have commas
+            });
+            // Display total amount
+            document.getElementById('net').textContent = 'Rs. ' + totalAmount.toFixed(2); // Assuming 2 decimal places
+        }
+    </script>
+{% endblock content %}

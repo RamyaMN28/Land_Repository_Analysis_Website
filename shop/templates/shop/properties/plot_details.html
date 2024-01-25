@@ -48,7 +48,7 @@
                    {% else %}
                    <button class="btn btn-secondary"><i class="fa fa-ban"></i> Sold Out </button>
                    {% endif %}
-                   <button class="btn btn-danger"><i class="fa fa-heart"></i></button>
+                   <button class="btn btn-danger" id="btnFav"><i class="fa fa-heart"></i></button>
                 </div>
             </div>
         </div>
@@ -60,6 +60,7 @@
         const btnMinus = document.getElementById("btnMinus");
         const pid = document.getElementById("pid");
         const btnCart = document.getElementById("btnCart");
+        const btnFav = document.getElementById("btnFav");
 
 
     
@@ -81,6 +82,34 @@
                 body:JSON.stringify(postObj)
             }).then(response=>{
                 return response.json();
+            }).then(data => {
+                console.log(data);
+                alert(data['status']);
+            });
+            
+        });
+
+        btnFav.addEventListener("click", function () {
+            let postObj = {
+
+                'pid': pid.value
+                
+            };
+            console.log(postObj);
+            fetch("/fav",{
+                method:'POST',
+                credentials:'same-origin',
+                headers:{
+                    'Accept':'application/json',
+                    'X-Requested-With':'XMLHttpRequest',
+                    'X-CSRFToken':'{{ csrf_token }}',
+                },
+                body:JSON.stringify(postObj)
+            }).then(response=>{
+                return response.json();
+            }).then(data => {
+                console.log(data);
+                alert(data['status']);
             });
             
         });

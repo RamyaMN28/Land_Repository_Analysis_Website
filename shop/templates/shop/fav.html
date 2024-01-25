@@ -1,0 +1,39 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+    Registration | JMR
+{% endblock title %}
+{% block content %}
+   <section class="bg-light py-4 my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mb-3">Cart Items</h4>
+                    <hr style="border-color: #b8bfc2;">
+                   
+                </div>
+
+               
+                <table class="">
+                    <tr>
+                        <th>Image</th>
+                        <th>Property Name</th>
+                        <th>Selling Price</th>
+                        <th>Remove</th>
+                    </tr>
+                    {% for item in fav %}
+                    <tr>
+                        <td><img src="{{item.property.image.url}}" height="75px" alt="{{item.property.name}}"></td>
+                        <td>{{item.property.name}}</td>
+                        <td>{{item.property.selling_price | stringformat:'d'}}</td>
+                        <td><a href="{% url 'remove_fav' item.id %}" onclick="return confirm('Are you sure you want to remove?')" class = "btn btn-danger btn-sm"><i class="fa fa-trash"></i>Remove</a></td>
+
+                    </tr>
+                   
+               
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
