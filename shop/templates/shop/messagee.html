@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Page</title>
+    <style>
+        /* Initially hide the message content */
+        #messageContent {
+            display: none;
+        }
+    </style>
+    <script>
+        function showDetails() {
+            // Show the message content when the button is clicked
+            document.getElementById('messageContent').style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <h1>Message Content:</h1>
+    
+    <!-- "Details" button calls the showDetails function to display the content -->
+    <button onclick="showDetails()">Details</button>
+
+    <!-- In your template -->
+    <a href="{% url 'display_message' msg_id=your_message_id %}">View Message</a>
+
+    <!-- Initially hidden message content -->
+    <p id="messageContent">{{ message_content }}</p>
+
+    <!-- You can customize the HTML structure based on your needs -->
+</body>
+</html>

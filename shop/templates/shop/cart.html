@@ -12,7 +12,7 @@
                    
                 </div>
 
-               
+                {% if cart %}
                 <table class="">
                     <tr>
                         <th>Image</th>
@@ -21,7 +21,7 @@
                         <th>Property size</th>
                         <th>Original Price</th>
                         <th>Selling Price</th>
-                        
+                        <th>Discount percentage</th>
                         <th>Remove</th>
                     </tr>
                     {% for item in cart %}
@@ -32,8 +32,9 @@
                         <td>{{item.property.property_size | stringformat:'d'}}</td>
                         <td>{{item.property.original_price | stringformat:'d'}}</td>
                         <td>{{item.property.selling_price | stringformat:'d'}}</td>
+                        <td>{{item.property.discount.percentage_discount}}</td>
+                        
                         <td><a href="{% url 'remove_cart' item.id %}" onclick="return confirm('Are you sure you want to remove?')" class = "btn btn-danger btn-sm"><i class="fa fa-trash"></i>Remove</a></td>
-
                     </tr>
                    
                
@@ -48,6 +49,10 @@
                     <td id="net"></td>
                </tr>
             </table>
+            <a href="{% url 'payment' %}" class="btn btn-primary">Proceed to Payment</a>
+            {% else %}
+            <p>Unlock a world of possibilities! Your cart is yearning for exciting finds—fill it with must-haves now!</p>
+            {% endif %}
             </div>
         </div>
     </section>

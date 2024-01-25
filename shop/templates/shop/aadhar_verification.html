@@ -1,0 +1,28 @@
+<!-- aadhar_verification.html -->
+
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+    Aadhar Verification | JMR
+{% endblock title %}
+
+{% block content %}
+    <section class="bg-light py-4 my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mb-3">Aadhar Verification</h4>
+                    <hr style="border-color: #b8bfc2;">
+                    {% include 'shop/inc/message.html' %}
+                </div>
+
+                <div class="col-6">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

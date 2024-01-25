@@ -12,7 +12,8 @@
 
 .new_price{
     font-weight: bold;
-    color:green;
+    background-color: green;
+    color:white;
 }
 
 
@@ -35,4 +36,15 @@
     right: 0;
     z-index: 10;
 }
+
+.icon-container {
+    display: flex;
+    align-items: center; /* Adjust vertical alignment if needed */
+    /* justify-content: space-between; */ /* Uncomment to distribute icons evenly */
+}
+
+.icon-container a {
+    margin-right: 10px; /* Adjust spacing between icons */
+}
+
 

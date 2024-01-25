@@ -1,0 +1,61 @@
+<!-- payment_page.html -->
+
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+    Payment | JMR
+{% endblock title %}
+
+{% block content %}
+    <section class="bg-light py-4 my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mb-3">Payment</h4>
+                    <hr style="border-color: #b8bfc2;">
+
+                    <!-- Display Total Amount -->
+                  <!--  <p>Total Amount: Rs. {{ total_amount }}</p>-->
+                    
+
+                   
+                    <!-- Aadhar Verification Form -->
+                    <form method="post" action="{% url 'aadhar_verification' %}">
+                        {% csrf_token %}
+                        {{ aadhar_verification_form.as_p }}
+                        
+                        <!-- Confirmation Question -->
+                        <label>
+                            <input type="checkbox" name="confirmation" required>
+                            Are you sure you want to proceed with the payment?
+                        </label>
+
+                        <button type="submit" class="btn btn-primary">Submit Payment</button>
+                    </form>
+                </div>
+            
+               
+            
+            
+            </div>
+        </div>
+       
+    </section>
+    <script>
+    
+        document.addEventListener("DOMContentLoaded", function () {
+             // Calculate and display total amount
+             calculateTotalAmount();
+         });
+         function calculateTotalAmount() {
+             // Get all selling prices
+             var sellingPrices = document.querySelectorAll('td:nth-child(6)');
+             // Calculate total amount
+             var totalAmount = 0;
+             sellingPrices.forEach(function (sellingPrice) {
+             totalAmount += parseFloat(sellingPrice.textContent.replace(',', '')); // Assuming the prices may have commas
+             });
+             // Display total amount
+             document.getElementById('net').textContent = 'Rs. ' + totalAmount.toFixed(2); // Assuming 2 decimal places
+         }
+     </script>
+{% endblock content %}

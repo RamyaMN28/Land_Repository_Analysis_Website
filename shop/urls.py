@@ -14,5 +14,7 @@ urlpatterns=[
     path('PlotType/<str:name>/',views.PlotTypeviews,name="PlotTypeViews"),
     path('PlotDetails/<str:cname>/<str:pname>/',views.plot_details,name="plot_details"),
     path('addtocart',views.add_to_cart,name="addtocart"),
-    
+    path('payment/', views.payment_page, name='payment'),
+    path('payment/verify/', views.aadhar_verification, name='aadhar_verification'),
+    path('payment/in_progress/', views.payment_in_progress, name='payment_in_progress'),
 ]

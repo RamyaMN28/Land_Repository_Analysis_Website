@@ -151,6 +151,34 @@ def getFileName(instance, filename):
     new_filename = "%s%s" % (now_time, filename)
     return os.path.join("uploads/", new_filename)
 
+class Employee(models.Model):
+    employee_id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=100, null=False, blank=False)
+    last_name = models.CharField(max_length=100, null=False, blank=False)
+    Age = models.IntegerField(null=True, blank=False)
+    start_date = models.DateTimeField(auto_now_add=True)
+    end_date = models.DateTimeField(auto_now_add=False)
+    email_id = models.CharField(max_length=100, null=False, blank=False)
+    phone_number = models.CharField(max_length=100,null=False, blank=False)
+
+    def __str__(self):
+      Name= self.first_name + " " + self.last_name
+      return Name
+    
+class Message(models.Model):
+  msg_id=models.AutoField(primary_key=True)
+  message_content = models.TextField()
+
+class AadharVerification(models.Model):
+    aadhar_id = models.AutoField(primary_key=True)
+    aadhar_number = models.CharField(max_length=12, unique=True, verbose_name='Aadhar Number')
+    name = models.CharField(max_length=255, verbose_name='Your Full Name')
+    aadhar_verified = models.CharField(max_length=1, null=False, blank=False)
+    def __str__(self):
+        return self.name
+
+
+
 class PropertyType(models.Model):
     id = models.AutoField(primary_key=True)
     name=models.CharField(max_length=150,null=False,blank=False)
@@ -161,6 +189,14 @@ class PropertyType(models.Model):
 
     def __str__(self):
         return self.description
+  
+class DiscountCode(models.Model):
+    id = models.AutoField(primary_key=True)
+    code = models.CharField(max_length=20, unique=True)
+    percentage_discount = models.FloatField(null=False,blank=False)
+
+    def __str__(self):
+        return self.code
 
 class Property(models.Model):
     seller=models.CharField(max_length=150,null=False,blank=False)
@@ -173,6 +209,7 @@ class Property(models.Model):
     property_type = models.ForeignKey(PropertyType, on_delete=models.CASCADE)
     original_price=models.FloatField(null=False,blank=False)
     selling_price=models.FloatField(null=False,blank=False)
+    discount=models.ForeignKey(DiscountCode, on_delete=models.CASCADE)
     Quantity= models.IntegerField(default=0,null=False,blank=False)
     property_size = models.FloatField(null=False, blank=False)
     description = models.TextField(max_length=500, null=False, blank=False)
@@ -207,19 +244,6 @@ class Listing(models.Model):
 
     def __str__(self):
       return self.price
-
-class Employee(models.Model):
-    first_name = models.CharField(max_length=100, null=False, blank=False)
-    last_name = models.CharField(max_length=100, null=False, blank=False)
-    Age = models.IntegerField(null=True, blank=False)
-    start_date = models.DateTimeField(auto_now_add=True)
-    end_date = models.DateTimeField(auto_now_add=False)
-    email_id = models.CharField(max_length=100, null=False, blank=False)
-    phone_number = models.CharField(max_length=100,null=False, blank=False)
-
-    def __str__(self):
-      Name= self.first_name + " " + self.last_name
-      return Name
 
 class RoleType(models.Model):
     description = models.CharField(max_length=100, null=False, blank=False)
@@ -270,6 +294,9 @@ class Offer(models.Model):
 
     def __str__(self):
       return self.offer_amount
+
+
+
 
 class ContractStatus(models.Model):
     description = models.CharField(max_length=100, null=False, blank=False)
