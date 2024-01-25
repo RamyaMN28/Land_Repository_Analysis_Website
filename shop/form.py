@@ -27,4 +27,3 @@ class AadharVerificationForm(forms.ModelForm):
         # Your custom validation logic here, if required
         return aadhar_number
     
-#hi
